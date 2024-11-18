@@ -1,0 +1,57 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-title>
+      <ion-icon name="star-outline" color="light"></ion-icon>
+      Pokédex
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-item lines="none">
+    <ion-input 
+      [(ngModel)]="pokemonName" 
+      (keyup.enter)="searchPokemon()"
+      placeholder="Busca tu Pokémon favorito"
+      clear-input="true">
+    </ion-input>
+  </ion-item>
+
+  <ion-button expand="block" (click)="searchPokemon()">
+    <ion-icon name="search-outline" slot="start"></ion-icon>
+    Buscar
+  </ion-button>
+
+  <div *ngIf="pokemonData" class="animate__animated animate__fadeIn">
+    <ion-card>
+      <div class="pokemon-number">
+        #{{ pokemonData.id.toString().padStart(3, '0') }}
+      </div>
+      <img [src]="pokemonData.sprites.front_default" alt="{{pokemonData.name}}">
+      <ion-card-header>
+        <ion-card-title>{{ pokemonData.name | titlecase }}</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p>
+          <ion-icon name="resize-outline"></ion-icon>
+          <strong>Altura:</strong> {{ pokemonData.height / 10 }} m
+        </p>
+        <p>
+          <ion-icon name="scale-outline"></ion-icon>
+          <strong>Peso:</strong> {{ pokemonData.weight / 10 }} kg
+        </p>
+        <p>
+          <ion-icon name="apps-outline"></ion-icon>
+          <strong>Tipos:</strong>
+        </p>
+        <div class="types-container">
+          <span *ngFor="let type of pokemonData.types">
+            {{ type.type.name }}
+          </span>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>
